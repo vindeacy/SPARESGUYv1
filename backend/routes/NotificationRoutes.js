@@ -4,7 +4,10 @@ import NotificationController from '../Controllers/NotificationController.js';
 const router = express.Router();
 
 // Route to create a new notification
-router.post('/notifications', NotificationController.createNotification);
+router.post('/', NotificationController.createNotification);
+
+//route to get all notifications
+router.get('/', NotificationController.getAllNotifications);
 
 // Route to get notifications for a user
 router.get('/notifications/:userId', NotificationController.getNotifications);

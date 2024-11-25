@@ -1,4 +1,5 @@
 import Order from '../Models/OrderModel.js';
+import NotificationModel from '../Models/NotificationModel.js';
 import mongoose from 'mongoose';
 
 // Create a new order
@@ -17,7 +18,7 @@ export const createOrder = async (req, res) => {
             cartItems: cartItems.map((item) => ({
                 ...item,
                 product: item.productId, // assuming you're using productId in the cartItem
-                _id: undefined // Remove the original _id to avoid duplicates
+                _id: undefined, // Remove the original _id to avoid duplicates
             })),
             customerId: convertedCustomerId, // Ensure the customerId is an ObjectId
             totalAmount,
@@ -25,17 +26,33 @@ export const createOrder = async (req, res) => {
         });
 
         const savedOrder = await newOrder.save();
-        res.status(201).json(savedOrder);
+
+        // Create a notification for the order
+        const notificationMessage = `Your order (#${savedOrder._id}) has been successfully placed.`;
+        const newNotification = new NotificationModel({
+            user: convertedCustomerId,
+            message: notificationMessage,
+            type: 'success', // Set type as 'success'
+        });
+
+        await newNotification.save();
+
+        res.status(201).json({ 
+            message: 'Order created successfully', 
+            order: savedOrder, 
+            notification: newNotification 
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-
-// Get all ordrrs 
+// Get all orders
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate('customerId').populate('cartItems.productId');
+        const orders = await Order.find()
+            .populate('customerId')
+            .populate('cartItems.productId');
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -74,7 +91,21 @@ export const updateOrder = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        res.status(200).json(updatedOrder);
+        // Create a notification for the order update
+        const notificationMessage = `Your order (#${updatedOrder._id}) has been updated.`;
+        const newNotification = new NotificationModel({
+            user: updatedOrder.customerId,
+            message: notificationMessage,
+            type: 'info', // Set type as 'info' for updates
+        });
+
+        await newNotification.save();
+
+        res.status(200).json({
+            message: 'Order updated successfully',
+            order: updatedOrder,
+            notification: newNotification,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -89,7 +120,20 @@ export const deleteOrder = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-        res.status(200).json({ message: 'Order deleted successfully' });
+        // Create a notification for the order deletion
+        const notificationMessage = `Your order (#${deletedOrder._id}) has been deleted.`;
+        const newNotification = new NotificationModel({
+            user: deletedOrder.customerId,
+            message: notificationMessage,
+            type: 'alert', // Set type as 'alert' for deletions
+        });
+
+        await newNotification.save();
+
+        res.status(200).json({
+            message: 'Order deleted successfully',
+            notification: newNotification,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

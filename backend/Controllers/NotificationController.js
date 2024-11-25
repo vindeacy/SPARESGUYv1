@@ -24,6 +24,20 @@ export const createNotification = async (req, res) => {
   }
 };
 
+// get all notifications
+
+export const getAllNotifications=async (req, res) => {
+  try {
+    const notifications = await NotificationModel.find().populate('user');
+    res.json(notifications);
+    } catch (err) {
+      console.error('Error fetching notifications:', err);
+      res.status(500).json({ message: 'Error fetching notifications', error: err });
+      }
+      };
+
+
+
 // Get notifications for a user
 export const getNotifications = async (req, res) => {
   try {
@@ -62,6 +76,7 @@ export const markAsRead = async (req, res) => {
 // Default export for use in routes
 export default {
   createNotification,
+  getAllNotifications,
   getNotifications,
   markAsRead,
 };
