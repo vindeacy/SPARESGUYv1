@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import { FaBars, FaRegHeart, FaRegUser, FaSearch } from 'react-icons/fa';
 import { BsCart3 } from 'react-icons/bs';
-import { MdOutlineNotificationsNone } from "react-icons/md";
+//import { MdOutlineNotificationsNone } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { SearchContext } from '../context/SearchContext';
@@ -28,9 +28,9 @@ const Header = () => {
     navigate('/UserProf', { state: { section: 'wishlist' } });
   };
 
-  const handleNotificationsClick = () => {
-    navigate('/UserProf', { state: { section: 'notifications' } });
-  };
+  // const handleNotificationsClick = () => {
+  //   navigate('/UserProf', { state: { section: 'notifications' } });
+  // };
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -158,14 +158,14 @@ const Header = () => {
                   {isDropdownVisible && <CartDropdown />}
                 </div>
 
-                <Button 
+                {/* <Button 
                   variant="link" 
                   className="p-1"
                   onClick={handleNotificationsClick}
                   style={{ color: '#FFFFFF' }}
                 >
                   <MdOutlineNotificationsNone size={24} />
-                </Button>
+                </Button> */}
 
                 <Nav.Link 
                   as={Link} 

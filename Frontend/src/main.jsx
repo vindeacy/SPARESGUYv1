@@ -1,5 +1,5 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+// import { StrictMode } from 'react';
+// import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -32,7 +32,8 @@ import Order from './Admin/Order.jsx';
 import Categories from './Admin/Categories.jsx';
 import Reports from './Admin/Reports.jsx';
 import Logout from './Admin/Logout.jsx';
-import Notification from './Admin/Header/Notification.jsx';
+import Notification from "./Homepage/Notification.jsx";
+
 const routes = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<App />}>
     <Route index element={<Homepage />} />
@@ -58,7 +59,7 @@ const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="admin/orders" element={<Order />} />
     <Route path="admin/categories" element={<Categories />} />
     <Route path="admin/reports" element={<Reports />} />
-    <Route path="admin/header/notification" element={<Notification />} />
+    <Route path="homepage/notifications" element={<Notification />} />
     <Route path="logout" element={<Logout />} />
    
 

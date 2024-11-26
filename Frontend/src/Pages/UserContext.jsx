@@ -1,16 +1,16 @@
-// UserContext.js
-import React, { createContext, useState, useContext } from 'react';
+// // UserContext.js
+// import React, { createContext, useState, useContext } from 'react';
 
-const UserContext = createContext();
+// const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Store user data here
+// export const UserProvider = ({ children }) => {
+//   const [user, setUser] = useState(null); // Store user data here
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
+//   return (
+//     <UserContext.Provider value={{ user, setUser }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// };
 
-export const useUser = () => useContext(UserContext);
+// export const useUser = () => useContext(UserContext);

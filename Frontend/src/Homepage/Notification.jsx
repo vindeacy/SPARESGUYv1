@@ -14,7 +14,7 @@ const Notification = ({ userId }) => {
 
     const fetchNotifications = async () => {
       try {
-        const res = await axios.get(`/api/notifications/${userId}`);
+        const res = await axios.get(`http://localhost:8000/api/notifications/${userId}`);
         setNotifications(res.data);
         setUnreadCount(res.data.filter((notif) => !notif.read).length);
       } catch (err) {
